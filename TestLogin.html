@@ -1,46 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login & Register | TechConnect: Palangoy</title>
     <link rel="stylesheet" href="stylelogin.css">
-    <title>Login | TechConnect: Palangoy</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* This ensures the eye icon sits nicely inside your input boxes */
+        .input-box {
+            position: relative;
+        }
+        .input-box i.toggle-password {
+            position: absolute;
+            right: 45px; /* Adjust based on your lock icon position */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff; /* Match your design color */
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <a href="TestHome.html" class="logo">TechConnect: Palangoy</a>
-
         <nav>
-            <a href="TestHome.html" class="active">Home</a>
+            <a href="TestHome.html">Home</a>
             <a href="TestAbout.html">About</a>
             <a href="TestCreators.html">Creators</a>
-            <a href="#">Log In or Sign Up</a>
+            <a href="#" class="active">Log In or Sign Up</a>
         </nav>
     </header>
+
     <div class="wrapper">
-        <form action="">
+        <form id="loginForm">
             <h1>Login</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="email" id="loginEmail" placeholder="Email Address" required>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="password"
-                placeholder="Password" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
+                <i class='bx bx-hide toggle-password' id="eyeLogin"></i>
             </div>
-
             <div class="remember-forgot">
                 <label><input type="checkbox"> Remember me</label>
-                <a href="#">Forgot Passowrd?</a>
+                <a href="#">Forgot Password?</a>
             </div>
-
             <button type="submit" class="btn">Login</button>
-
             <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+            </div>
+        </form>
+
+        <form id="registerForm" style="display: none;">
+            <h1>Register</h1>
+            <div class="input-box">
+                <input type="email" id="regEmail" placeholder="Email Address" required>
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="regPassword" placeholder="Create Password" required>
+                <i class='bx bxs-lock-alt'></i>
+                <i class='bx bx-hide toggle-password' id="eyeReg"></i>
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="register-link">
+                <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
             </div>
         </form>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Your verified configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnsvoLUXq1_M-HynN9rxgKv3AFshfBmMM",
+            authDomain: "techconnect-77796.firebaseapp.com",
+            projectId: "techconnect-77796",
+            storageBucket: "techconnect-77796.firebasestorage.app",
+            messagingSenderId: "416334644269",
+            appId: "1:416334644269:web:61c09c96166d821ef4a4a4",
+            measurementId: "G-B37NKF87MV"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Form Toggling Logic
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+
+        showRegister.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'none'; registerForm.style.display = 'block'; };
+        showLogin.onclick = (e) => { e.preventDefault(); registerForm.style.display = 'none'; loginForm.style.display = 'block'; };
+
+        // Show/Hide Password Toggle Logic
+        const toggleVisibility = (eyeId, inputId) => {
+            const eye = document.getElementById(eyeId);
+            const input = document.getElementById(inputId);
+            eye.onclick = () => {
+                if (input.type === "password") {
+                    input.type = "text";
+                    eye.classList.replace('bx-hide', 'bx-show');
+                } else {
+                    input.type = "password";
+                    eye.classList.replace('bx-show', 'bx-hide');
+                }
+            };
+        };
+
+        toggleVisibility('eyeLogin', 'loginPassword');
+        toggleVisibility('eyeReg', 'regPassword');
+
+        // --- LOGIN LOGIC ---
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert("Login Successful!");
+                window.location.href = "TestGame.html";
+            } catch (error) {
+                alert("Login Error: " + error.message);
+            }
+        };
+
+        // --- REGISTER LOGIC ---
+        registerForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Registration Successful!");
+                window.location.href = "TestGame.html";
+            } catch (error) {
+                alert("Registration Error: " + error.message);
+            }
+        };
+    </script>
 </body>
 </html>

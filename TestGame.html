@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ICT Training | TechConnect: Palangoy</title>
+    <link rel="stylesheet" href="styleabout.css">
+    <link rel="stylesheet" href="stylegame.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <header>
+        <a href="TestHome.html" class="logo">TechConnect: Palangoy</a>
+        <nav>
+            <a href="TestHome.html">Log Out</a>
+            <a href="TestCreators.html">Creators</a>
+            <a href="#" class="active">Training Game</a>
+        </nav>
+    </header>
+
+    <main class="game-wrapper">
+        <div class="stats-bar">
+            <div class="progress-container">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="lives-count">
+                <i class='bx bxs-heart'></i> <span id="lives">3</span>
+            </div>
+            <div class="xp-display">
+                XP: <span id="score">0</span>
+            </div>
+        </div>
+
+        <section class="question-container">
+            <h2 class="question-title" id="questionText">Preparing Challenge...</h2>
+            <div class="options-grid" id="optionsGrid"></div>
+        </section>
+
+        <footer class="game-footer">
+            <button id="checkBtn" class="check-btn" disabled>CHECK ANSWER</button>
+        </footer>
+    </main>
+
+    <div id="feedbackContainer">
+        <div id="feedbackBox" class="feedback-content">
+            <div class="status-info">
+                <i id="statusIcon" class='bx'></i>
+                <div class="feedback-text">
+                    <h2 id="statusTitle"></h2>
+                    <p id="statusMsg"></p>
+                </div>
+            </div>
+            <button id="nextBtn" class="next-btn">CONTINUE</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
