@@ -128,7 +128,7 @@
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 alert("Login Successful!");
-                window.location.href = "TestGame.html";
+                window.location.href = "TestDashboard.html";
             } catch (error) {
                 alert("Login Error: " + error.message);
             }
@@ -142,7 +142,7 @@
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
                 alert("Registration Successful!");
-                window.location.href = "TestGame.html";
+                window.location.href = "TestDashboard.html";
             } catch (error) {
                 alert("Registration Error: " + error.message);
             }
